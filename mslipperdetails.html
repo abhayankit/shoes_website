@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <h1 class="heading">PRODUCT DETAIL sliper</h1>
+
+        <div class="detail">
+            <div class="image">
+                <img src="">
+            </div>
+            <div class="content">
+                <h1 class="name"></h1>
+                <div class="price"></div>
+                <div class="buttons">
+                    <button><a href="index.html">Back To Home</a></button>
+                    
+                    <button><a href="contact.html">If Any Query</a></button>
+                </div>
+                <div class="description"></div>
+            </div>
+        </div>
+
+        <!-- <div class="title"></div> -->
+        <h1 class="heading">Similar product</h1>
+        <div class="listProduct"></div>
+    </div>
+
+    
+
+    <script>
+        let products = null;
+        // get datas from file json
+        fetch('mslipper.json')
+            .then(response => response.json())
+            .then(data => {
+                products = data;
+                showDetail();
+        })
+
+        function showDetail(){
+    // remove datas default from HTML
+        let detail = document.querySelector('.detail');
+        let listProduct = document.querySelector('.listProduct');
+        let productId =  new URLSearchParams(window.location.search).get('id');
+        let thisProduct = products.filter(value => value.id == productId)[0];
+        //if there is no product with id = productId => return to home page
+        if(!thisProduct){
+            window.location.href = "/";
+        }
+
+        detail.querySelector('.image img').src = thisProduct.image;
+        detail.querySelector('.name').innerText = thisProduct.name;
+        detail.querySelector('.price').innerText = '$' + thisProduct.price;
+        detail.querySelector('.description').innerText = '$' + thisProduct.description;
+
+
+        (products.filter(value => value.id != productId)).forEach(product => {
+            let newProduct = document.createElement('a');
+            newProduct.href = '/mslipperdetails.html?id=' + product.id;
+            newProduct.classList.add('item');
+            newProduct.innerHTML =
+            `<img src="${product.image}" alt="">
+            <h2>${product.name}</h2>
+            <div class="price">$${product.price}</div>`;
+            listProduct.appendChild(newProduct);
+        });
+    }
+
+    </script>
+
+
+<!--======footer======-->
+<footer>
+    <div class="content">
+      <div class="top">
+        <div class="logo-details">
+          <i class="fab fa-slack"></i>
+          <a href=""><span class="logo_name">Famexon</span></a>
+        </div>
+        <div class="media-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="link-boxes">
+        <ul class="box">
+          <li class="link_name"> About Us</li>
+          <p>We are one of the known industrialist in the field of footwear ventures who known for their best inventive, Stylist, Comfort planned Footwear.</p>
+        </ul>
+        <ul class="box">
+          <li class="link_name">Services</li>
+          <li><a href="mens.html">Men's Collection</a></li>
+          <li><a href="womens.html">Women's Collection</a></li>
+          <li><a href="kids.html">Kid's Collection</a></li>
+        </ul>
+        <ul class="box input-box">
+          <li class="link_name">Subscribe</li>
+          <li><input type="text" placeholder="Enter your email"></li>
+          <li><input type="button" value="Subscribe"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom-details">
+      <div class="bottom_text">
+        <span class="copyright_text">Copyright &#169; 2024 <a href="#">Abhay Sah.</a>All rights reserved</span>
+        <span class="policy_terms">
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms & condition</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+<!----========footer end======-->
+
+
+
+
+
+
+
+
+
+</body>
+</html>
